@@ -3,6 +3,24 @@
 #include <stdbool.h>
 
 /**
+ * gcd - calculates the greatest common divisor of two numbers.
+ * @a: the first number
+ * @b: the second number
+ * Return: the greatest common divisor of a and b
+ */
+unsigned long long gcd(unsigned long long a, unsigned long long b)
+{
+unsigned long long temp;
+while (b != 0)
+{
+temp = b;
+b = a % b;
+a = temp;
+}
+return (a);
+}
+
+/**
  * is_prime - checks if a number is prime.
  * @number: the number to check
  * Return: true if the number is prime, false otherwise
