@@ -34,16 +34,16 @@ unsigned long long x = 2, y = 2, d = 1;
 
 while (d == 1)
 {
-x = (x * x + 1) % n;
-y = (y * y + 1) % n;
-y = (y * y + 1) % n;
+x = (x *x + 1) % n;
+y = (y *y + 1) % n;
+y = (y *y + 1) % n;
 d = gcd(abs(x - y), n);
 }
 
 if (d == n)
-return (0);  // Prime factorization failed
+return (0);
 
-return d;
+return (d);
 }
 
 /**
@@ -68,6 +68,12 @@ return;
 printf("%llu=%llu*%llu\n", n, factor, n / factor);
 }
 
+/**
+ * main - entry point of the program.
+ * @argc: the number of arguments
+ * @argv: an array of argument strings
+ * Return: 0 on success, 1 on failure
+ */
 int main(int argc, char *argv[])
 {
 if (argc != 2)
