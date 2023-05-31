@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
+/**
  * factorize - takes an integer 'number' as input
  * and factors it into two smaller numbers.
  * If it does, it calculates the factors 'p' and 'q' by
@@ -33,10 +33,10 @@ printf("%d = %d * %d\n", number, p, q);
 }
 }
 
-/*
+/**
  * main - entry point of the program.
- * @argc - the number of arguments
- * @argv - an array of argument string
+ * @argc: the number of arguments
+ * @argv: an array of argument string
  * returns 0 and 1
  */
 
