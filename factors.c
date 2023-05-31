@@ -24,7 +24,8 @@ printf("%d=%d*%d\n", number, p, q);
 
 int main(int argc, char* argv[])
 {
-if (argc != 2) {
+if (argc != 2)
+{
 printf("Usage: factors <file>\n");
 return (0);
 }
@@ -37,9 +38,8 @@ return (0);
 }
 
 int number;
-while (fscanf(file, "%d", &number) != EOF) {
+while (fscanf(file, "%d", &number) != EOF)
 factorize(number);
-}
 
 fclose(file);
 return (0);
