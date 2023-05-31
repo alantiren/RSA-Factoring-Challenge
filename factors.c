@@ -36,11 +36,10 @@ printf("%d = %d * %d\n", number, p, q);
 /**
  * main - entry point of the program.
  * @argc: the number of arguments
- * @argv: an array of argument string
- * returns 0 and 1
+ * @argv: an array of argument strings
+ * Return: 0 on success, 1 on failure
  */
-
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 if (argc != 2)
 {
@@ -48,7 +47,7 @@ printf("Usage: factors <file>\n");
 return (1);
 }
 
-FILE* file = fopen(argv[1], "r");
+FILE *file = fopen(argv[1], "r");
 if (!file)
 {
 printf("Failed to open the file.\n");
