@@ -5,7 +5,7 @@
  * factorize - takes an integer 'number' as input
  * and factors it into two smaller numbers.
  * If it does, it calculates the factors 'p' and 'q' by
- * the input number by the current iteration.
+ * @number: the input number by the current iteration.
  * It then prints the factorization in the format "number = p * q".
  * The function continues this process until
  * the input number is fully factorized.
