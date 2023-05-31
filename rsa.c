@@ -1,93 +1,98 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include <stdbool.h>
-#include <time.h>
 
-// Function to calculate the greatest common divisor
-uint64_t gcd(uint64_t a, uint64_t b) {
-    if (b == 0) {
-        return a;
-    }
-    return gcd(b, a % b);
+/**
+ * is_prime - checks if a number is prime.
+ * @number: the number to check
+ * Return: true if the number is prime, false otherwise
+ */
+bool is_prime(unsigned long long number)
+{
+if (number <= 1)
+return (false);
+
+unsigned long long i;
+for (i = 2; i * i <= number; i++)
+{
+if (number % i == 0)
+return (false);
 }
 
-// Pollard's rho algorithm for factorization
-uint64_t pollard_rho(uint64_t n) {
-    uint64_t x = rand() % n;
-    uint64_t y = x;
-    uint64_t c = rand() % (n - 1) + 1;
-    uint64_t d = 1;
-
-    while (d == 1) {
-        x = (x * x + c) % n;
-        y = (y * y + c) % n;
-        y = (y * y + c) % n;
-        d = gcd(abs(x - y), n);
-    }
-
-    return d;
+return (true);
 }
 
-// Function to check if a number is prime
-bool is_prime(uint64_t number) {
-    if (number <= 1) {
-        return false;
-    }
-    if (number <= 3) {
-        return true;
-    }
-    if (number % 2 == 0 || number % 3 == 0) {
-        return false;
-    }
+/**
+ * pollard_rho - performs Pollard's rho algorithm for prime factorization.
+ * @n: the number to factorize
+ * Return: the prime factor of n
+ */
 
-    for (uint64_t i = 5; i * i <= number; i += 6) {
-        if (number % i == 0 || number % (i + 2) == 0) {
-            return false;
-        }
-    }
+unsigned long long pollard_rho(unsigned long long n)
+{
+unsigned long long x = 2, y = 2, d = 1;
 
-    return true;
+while (d == 1)
+{
+x = (x * x + 1) % n;
+y = (y * y + 1) % n;
+y = (y * y + 1) % n;
+d = gcd(abs(x - y), n);
 }
 
-// Function to factorize the given number into prime factors
-void factorize(uint64_t number) {
-    if (is_prime(number)) {
-        printf("%lu=%lu*%lu\n", number, number, 1);
-        return;
-    }
+if (d == n)
+return (0);  // Prime factorization failed
 
-    uint64_t factor = pollard_rho(number);
-    while (!is_prime(factor)) {
-        factor = pollard_rho(factor);
-    }
-
-    uint64_t p = factor;
-    uint64_t q = number / factor;
-    printf("%lu=%lu*%lu\n", number, p, q);
+return d;
 }
 
-int main(int argc, char *argv[]) {
-    if (argc != 2) {
-        printf("Usage: ./rsa <file>\n");
-        return 1;
-    }
+/**
+ * factorize - factors the RSA number n into its prime factors.
+ * @n: the RSA number to factorize
+ */
+void factorize(unsigned long long n)
+{
+if (is_prime(n))
+{
+printf("%llu=%llu*1\n", n, n);
+return;
+}
 
-    char *filename = argv[1];
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
-        printf("Error opening file\n");
-        return 1;
-    }
+unsigned long long factor = pollard_rho(n);
+if (factor == 0)
+{
+printf("Failed to factorize the number.\n");
+return;
+}
 
-    srand(time(NULL));
+printf("%llu=%llu*%llu\n", n, factor, n / factor);
+}
 
-    char line[100];
-    while (fgets(line, sizeof(line), file) != NULL) {
-        uint64_t number = strtoull(line, NULL, 10);
-        factorize(number);
-    }
+int main(int argc, char *argv[])
+{
+if (argc != 2)
+{
+printf("Usage: rsa <file>\n");
+return (1);
+}
 
-    fclose(file);
-    return 0;
+FILE *file = fopen(argv[1], "r");
+if (!file)
+{
+printf("Failed to open the file.\n");
+return (1);
+}
+
+unsigned long long number;
+if (fscanf(file, "%llu", &number) != 1)
+{
+printf("Invalid input.\n");
+fclose(file);
+return (1);
+}
+
+factorize(number);
+
+fclose(file);
+return (0);
 }
